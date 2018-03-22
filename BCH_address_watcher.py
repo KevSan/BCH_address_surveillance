@@ -1,34 +1,32 @@
 import smtplib
 import psycopg2
 import time
+from email.mime.text import MIMEText
 
 
-with open("passwords.keys", "r") as myfile:
-    private_keys = myfile.readlines()
+with open("passwords.keys", "r") as my_file:
+    private_keys = my_file.readlines()
     password = private_keys[0]
     POSTGRES_DB = private_keys[1]
 
 
 def send_email_notification(mssg):
 
-    sender = "alerts@altcoinadvisors.com"
+    sender = "kevinsanchez1989@gmail.com"
     receivers = ["kevin@altcoinadvisors.com"]
 
-    subject = "test"
-
-    message = """\
-    From: %s
-    To: %s
-    Subject: %s
-          
-    %s """ % (sender, ",".join(receivers), subject, mssg)
+    subject = "Stack Overflow Test"
+    msg = MIMEText(mssg)
+    msg['Subject'] = subject
+    msg['To'] = ",".join(receivers)
+    msg['From'] = sender
 
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
         server.login(sender, password)
-        server.sendmail(sender, receivers, message)
+        server.sendmail(sender, receivers, msg.as_string())
         server.close()
 
     except Exception as e:
@@ -74,4 +72,5 @@ if __name__ == '__main__':
         if len(list_of_transactions) != 0:
             send_email_notification("Movement on this address")  # need to make a specific email for the movement
         else:
+            send_email_notification("test")
             pass
