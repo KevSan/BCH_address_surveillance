@@ -12,7 +12,7 @@ with open("passwords.keys", "r") as my_file:
 
 def send_email_notification(mssg):
 
-    sender = "kevinsanchez1989@gmail.com"
+    sender = "alerts@altcoinadvisors.com"
     receivers = ["kevin@altcoinadvisors.com"]
 
     subject = "Stack Overflow Test"
